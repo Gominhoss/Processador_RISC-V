@@ -2,13 +2,13 @@
 
 ## Visão Geral
 
-[cite_start]Este projeto consiste na implementação de um processador RISC-V de 32 bits com um caminho de dados de ciclo único, desenvolvido como parte do trabalho prático da disciplina de **CSI211 - Fundamentos de Organização e Arquitetura de Computadores** na Universidade Federal de Ouro Preto (UFOP)[cite: 1081].
+Este projeto consiste na implementação de um processador RISC-V de 32 bits com um caminho de dados de ciclo único, desenvolvido como parte do trabalho prático da disciplina de **CSI211 - Fundamentos de Organização e Arquitetura de Computadores** na Universidade Federal de Ouro Preto (UFOP).
 
 O design do processador foi baseado no diagrama de caminho de dados apresentado na Figura 4.21 do livro texto da disciplina, adaptado para um subconjunto específico de instruções.
 
 ### Conjunto de Instruções Implementado (Grupo 32)
 
-[cite_start]O processador foi projetado para decodificar e executar corretamente o seguinte conjunto de 7 instruções do padrão RISC-V[cite: 1141]:
+O processador foi projetado para decodificar e executar corretamente o seguinte conjunto de 7 instruções do padrão RISC-V:
 
 | Tipo        | Instrução | Descrição                               |
 | :---------- | :-------- | :---------------------------------------- |
@@ -27,23 +27,27 @@ O design foi modularizado em vários arquivos Verilog para organização e clare
 -   `riscv_processor.v`: O módulo de topo que conecta todos os outros componentes.
 -   `control_unit.v`: A unidade de controle principal, responsável por decodificar o opcode da instrução e gerar os sinais de controle.
 -   `alu_control.v`: Unidade de controle secundária que gera o sinal específico para a ULA com base no `ALUOp` e nos campos `funct`.
--   [cite_start]`alu.v`: A Unidade Lógica e Aritmética, que executa as operações de cálculo[cite: 50].
+-   `alu.v`: A Unidade Lógica e Aritmética, que executa as operações de cálculo.
 -   `reg_file.v`: O banco de registradores que armazena o estado dos 32 registradores do processador.
 -   `memory.v`: Um módulo que simula uma memória unificada para instruções e dados.
 -   `datapath_components.v`: Contém componentes auxiliares como multiplexadores, o gerador de imediato e somadores.
 -   `testbench.v`: O ambiente de simulação usado para verificar a funcionalidade do processador, pré-carregando um programa e monitorando a execução.
 
 ## Como Compilar e Executar
+#### Pré-requisito: Tenha o Icarus Verilog instalado e configurado no seu sistema.
 
-O projeto pode ser compilado e simulado usando Icarus Verilog e VVP.
+### **Primeira forma de rodar o código**:
 
-1.  **Pré-requisito:** Tenha o Icarus Verilog instalado e configurado no seu sistema.
-2.  **Preparar o Teste:** Certifique-se de que o arquivo `program.mem` contém o programa em hexadecimal que você deseja executar. Você pode usar o script `compila_e_executa_iterativo.bat` para escolher entre os testes pré-definidos.
-3.  **Compilar:** No terminal, na pasta raiz do projeto, execute o comando:
+1.  **Rodar o arquivo .bat:** Nesse repositório existe um arquivo chamado compila_e_executa_iterativo.bat. Ao rodar ele você escolhe que tipo de teste fará de acordo com os dois testes que estão na pasta /testes
+
+### **Segunda forma de rodar o código**:
+
+1.  **Preparar o Teste:** Certifique-se de que o arquivo `program.mem` contém o programa em hexadecimal que você deseja executar. Você pode usar o script `compila_e_executa_iterativo.bat` para escolher entre os testes pré-definidos.
+2.  **Compilar:** No terminal, na pasta raiz do projeto, execute o comando:
     ```bash
     iverilog -o meu_processador.vvp testbench.v riscv_processor.v memory.v control_unit.v alu_control.v datapath_components.v reg_file.v alu.v
     ```
-4.  **Executar:** Após a compilação bem-sucedida, execute a simulação com:
+3.  **Executar:** Após a compilação bem-sucedida, execute a simulação com:
     ```bash
     vvp meu_processador.vvp
     ```
